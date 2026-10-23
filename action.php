@@ -31,8 +31,8 @@ if ($mode == 'entry') {
     if ($open) {
         out(false, $v['name'].' is already inside (open visit). Entry rejected.');
     }
-    if ($v['status'] != 'Active') {
-        out(false, 'Pass is '.$v['status'].'. Register a new pass for this visit.');
+    if ($v['status'] == 'Expired') {
+    out(false, 'Pass has expired. Register a new pass.');
     }
     $pdo->prepare("INSERT INTO visits(visitor_id,entry_time,entry_method,entry_by) VALUES(?,NOW(),?,?)")->execute([$v['id'],$method,$me]);
     out(true, 'Entry recorded: '.$v['name'].' ('.($method == 'qr' ? 'QR scan' : 'Manual').')');
